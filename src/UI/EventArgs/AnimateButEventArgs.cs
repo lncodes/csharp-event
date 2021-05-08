@@ -1,10 +1,13 @@
 ﻿namespace Lncodes.Example.Event
 {
-    public class AnimateButEventArgs
+    public sealed class AnimateButEventArgs
     {
         public readonly string Message;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message"></param>
         public AnimateButEventArgs(string message) =>
             (Message) = (message);
     }

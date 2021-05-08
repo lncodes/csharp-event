@@ -1,12 +1,22 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Lncodes.Example.Event
 {
     public class Program
     {
-        static void Main()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        protected Program() { }
+
+        /// <summary>
+        /// Main Program
+        /// </summary>
+        private static void Main()
         {
-            var uiController = RandomTypeOfUIController();
+            var uiId = GetRandomUITypesId();
+            var uiController = CreateUITypesById(uiId);
 
             SubsToRegulerEvent(uiController);
             SubsToGenricEventHendler(uiController);
@@ -16,19 +26,20 @@ namespace Lncodes.Example.Event
         }
 
         /// <summary>
-        /// Method for random UI
+        /// Method for generate ui types by id
         /// </summary>
-        /// <returns cref="UIController"></returns>
-        private static UIController RandomTypeOfUIController()
+        /// <param name="uiTypesId"></param>
+        /// <returns cref=UIController></returns>
+        private static UIController CreateUITypesById(int uiTypesId)
         {
-            switch(new Random().Next(2))
+            switch(uiTypesId)
             {
                 case 0:
                     return new MainMenuUIController();
                 case 1:
                     return new ResultMenuUIController();
                 default:
-                    throw new Exception("Error to random UI");
+                    throw new ArgumentOutOfRangeException(nameof(uiTypesId));
             }
         }
 
@@ -87,6 +98,16 @@ namespace Lncodes.Example.Event
                 Console.WriteLine($"Event Send From : {sender.GetType().Name}");
                 Console.WriteLine($"Messege : {args.Message}");
             };
+        }
+
+        /// <summary>
+        /// Method for random UI types id
+        /// </summary>
+        /// <returns cref=int></returns>
+        private static int GetRandomUITypesId()
+        {
+            var ammountOfUITypes = 2;
+            return RandomNumberGenerator.GetInt32(ammountOfUITypes);
         }
     }
 }

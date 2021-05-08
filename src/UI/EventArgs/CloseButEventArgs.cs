@@ -2,11 +2,14 @@
 
 namespace Lncodes.Example.Event
 {
-    public class CloseButEventArgs : EventArgs
+    public sealed class CloseButEventArgs : EventArgs
     {
         public readonly string Messege;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="messege"></param>
         public CloseButEventArgs(string messege) =>
             (Messege) = (messege);
     }
