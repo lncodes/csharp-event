@@ -2,7 +2,7 @@
 
 namespace Lncodes.Example.Event
 {
-    public class MainMenuUIController : UIController
+    public sealed class MainMenuUIController : UIController
     {
         ///<inheritdoc cref="UIController.PressCloseBut"/>
         public override void PressCloseBut()

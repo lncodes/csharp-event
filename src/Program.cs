@@ -1,12 +1,22 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Lncodes.Example.Event
 {
     public class Program
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        protected Program() { }
+
+        /// <summary>
+        /// Main Program
+        /// </summary>
         static void Main()
         {
-            var uiController = RandomTypeOfUIController();
+            var uiId = GetRandomUITypesId();
+            var uiController = GenerateUITypesById(uiId);
 
             SubsToRegulerEvent(uiController);
             SubsToGenricEventHendler(uiController);
@@ -19,16 +29,16 @@ namespace Lncodes.Example.Event
         /// Method for random UI
         /// </summary>
         /// <returns cref="UIController"></returns>
-        private static UIController RandomTypeOfUIController()
+        private static UIController GenerateUITypesById(int uiTypesId)
         {
-            switch(new Random().Next(2))
+            switch(uiTypesId)
             {
                 case 0:
                     return new MainMenuUIController();
                 case 1:
                     return new ResultMenuUIController();
                 default:
-                    throw new Exception("Error to random UI");
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -87,6 +97,16 @@ namespace Lncodes.Example.Event
                 Console.WriteLine($"Event Send From : {sender.GetType().Name}");
                 Console.WriteLine($"Messege : {args.Message}");
             };
+        }
+
+        /// <summary>
+        /// Method for random UI types id
+        /// </summary>
+        /// <returns cref=int></returns>
+        private static int GetRandomUITypesId()
+        {
+            var ammountOfUITypes = 2;
+            return RandomNumberGenerator.GetInt32(0, ammountOfUITypes);
         }
     }
 }

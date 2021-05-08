@@ -2,7 +2,7 @@
 
 namespace Lncodes.Example.Event
 {
-    public class CloseButEventArgs : EventArgs
+    public sealed class CloseButEventArgs : EventArgs
     {
         public readonly string Messege;
 

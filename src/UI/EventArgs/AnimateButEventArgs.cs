@@ -1,6 +1,6 @@
 ﻿namespace Lncodes.Example.Event
 {
-    public class AnimateButEventArgs
+    public sealed class AnimateButEventArgs
     {
         public readonly string Message;
 
