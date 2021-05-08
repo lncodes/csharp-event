@@ -13,10 +13,10 @@ namespace Lncodes.Example.Event
         /// <summary>
         /// Main Program
         /// </summary>
-        static void Main()
+        private static void Main()
         {
             var uiId = GetRandomUITypesId();
-            var uiController = GenerateUITypesById(uiId);
+            var uiController = CreateUITypesById(uiId);
 
             SubsToRegulerEvent(uiController);
             SubsToGenricEventHendler(uiController);
@@ -26,10 +26,11 @@ namespace Lncodes.Example.Event
         }
 
         /// <summary>
-        /// Method for random UI
+        /// Method for generate ui types by id
         /// </summary>
-        /// <returns cref="UIController"></returns>
-        private static UIController GenerateUITypesById(int uiTypesId)
+        /// <param name="uiTypesId"></param>
+        /// <returns cref=UIController></returns>
+        private static UIController CreateUITypesById(int uiTypesId)
         {
             switch(uiTypesId)
             {
@@ -106,7 +107,7 @@ namespace Lncodes.Example.Event
         private static int GetRandomUITypesId()
         {
             var ammountOfUITypes = 2;
-            return RandomNumberGenerator.GetInt32(0, ammountOfUITypes);
+            return RandomNumberGenerator.GetInt32(ammountOfUITypes);
         }
     }
 }

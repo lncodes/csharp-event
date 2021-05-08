@@ -4,7 +4,10 @@
     {
         public readonly string Message;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message"></param>
         public AnimateButEventArgs(string message) =>
             (Message) = (message);
     }
