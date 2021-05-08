@@ -38,7 +38,7 @@ namespace Lncodes.Example.Event
                 case 1:
                     return new ResultMenuUIController();
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(uiTypesId));
             }
         }
 
