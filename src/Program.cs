@@ -26,7 +26,7 @@ internal static class Program
         {
             0 => new MainMenuUiController(),
             1 => new ResultMenuUiController(),
-            _ => throw new ArgumentOutOfRangeException(nameof(uiId))
+            _ => throw new InvalidOperationException($"Unexpected UI ID: {uiId}")
         };
     }
 
