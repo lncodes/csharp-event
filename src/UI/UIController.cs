@@ -1,41 +1,40 @@
-﻿using System;
+﻿namespace Lncodes.Example.Event;
 
-namespace Lncodes.Example.Event
+using System;
+
+public abstract class UiController
 {
-    public abstract class UIController
-    {
-        public event Action OnOpenButPress;
-        public event EventHandler PressCloseButEventHandler;
-        public event EventHandler<AnimateButEventArgs> PressAnimateButEventHandler;
+    public event Action OnOpenButtonPressed;
+    public event EventHandler CloseButtonPressedEventHandler;
+    public event EventHandler<string> AnimateButtonPressedEventHandler;
 
-        /// <summary>
-        /// Method for pressing close button
-        /// </summary>
-        public abstract void PressCloseBut();
+    /// <summary>
+    /// Handles the action of pressing the close button.
+    /// </summary>
+    public abstract void PressCloseButton();
 
-        /// <summary>
-        /// Method for pressing animate button
-        /// </summary>
-        public abstract void PressAnimateBut();
+    /// <summary>
+    /// Handles the action of pressing the animate button.
+    /// </summary>
+    public abstract void PressAnimateButton();
 
-        /// <summary>
-        /// Method for raise close button event
-        /// </summary>
-        /// <param name="e">Argument for the event hendler</param>
-        protected virtual void OnCloseButPress(EventArgs e) =>
-            PressCloseButEventHandler?.Invoke(this, e);
+    /// <summary>
+    /// Handles the action of pressing the open button.
+    /// </summary>
+    public void PressOpenButton() =>
+        OnOpenButtonPressed?.Invoke();
 
-        /// <summary>
-        /// Method For Raise Animate Button Event
-        /// </summary>
-        /// <param name="e">Argument for the event hendler</param>
-        protected virtual void OnAnimateButPress(AnimateButEventArgs e) =>
-            PressAnimateButEventHandler?.Invoke(this, e);
+    /// <summary>
+    /// Raises the event for when the close button is pressed.
+    /// </summary>
+    /// <param name="e">The event arguments for the close button press.</param>
+    protected virtual void OnCloseButtonPressed(EventArgs e) =>
+        CloseButtonPressedEventHandler?.Invoke(this, e);
 
-        /// <summary>
-        /// Method for pressing open button
-        /// </summary>
-        public void PressOpenBut() =>
-            OnOpenButPress?.Invoke();
-    }
+    /// <summary>
+    /// Raises the event for when the animate button is pressed.
+    /// </summary>
+    /// <param name="message">The message associated with the animate button press.</param>
+    protected virtual void OnAnimateButtonPressed(string message) =>
+        AnimateButtonPressedEventHandler?.Invoke(this, message);
 }

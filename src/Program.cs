@@ -1,113 +1,75 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Lncodes.Example.Event
+namespace Lncodes.Example.Event;
+
+internal static class Program
 {
-    public class Program
+    /// <summary>
+    /// Main entry point of the application.
+    /// </summary>
+    private static void Main()
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        protected Program() { }
+        var uiController = CreateRandomUiController();
+        SubscribeToEvents(uiController);
+        TriggerUiControllerEvents(uiController);
+    }
 
-        /// <summary>
-        /// Main Program
-        /// </summary>
-        private static void Main()
+    /// <summary>
+    /// Creates a UI controller instance based on a randomly generated ID
+    /// </summary>
+    /// <returns>An instance of <see cref="UiController"/></returns>
+    private static UiController CreateRandomUiController()
+    {
+        var uiId = RandomNumberGenerator.GetInt32(2);
+        return uiId switch
         {
-            var uiId = GetRandomUITypesId();
-            var uiController = CreateUITypesById(uiId);
+            0 => new MainMenuUiController(),
+            1 => new ResultMenuUiController(),
+            _ => throw new ArgumentOutOfRangeException(nameof(uiId))
+        };
+    }
 
-            SubsToRegulerEvent(uiController);
-            SubsToGenricEventHendler(uiController);
-            SubsToNonGenericEventHendler(uiController);
+    /// <summary>
+    /// Triggers all events on the specified <see cref="UiController"/>.
+    /// </summary>
+    /// <param name="uiController">The UI controller whose events will be triggered.</param>
+    private static void TriggerUiControllerEvents(UiController uiController)
+    {
+        uiController.PressOpenButton();
+        uiController.PressAnimateButton();
+        uiController.PressCloseButton();
+    }
 
-            CallAllUIControllerEvent(uiController);
-        }
-
-        /// <summary>
-        /// Method for generate ui types by id
-        /// </summary>
-        /// <param name="uiTypesId"></param>
-        /// <returns cref=UIController></returns>
-        private static UIController CreateUITypesById(int uiTypesId)
+    /// <summary>
+    /// Subscribes to all event handlers for the given UI controller
+    /// </summary>
+    /// <param name="uiController">The UI controller instance</param>
+    private static void SubscribeToEvents(UiController uiController)
+    {
+        uiController.OnOpenButtonPressed += () =>
         {
-            switch(uiTypesId)
+            Console.WriteLine("1. The open button has been pressed.");
+            Console.WriteLine();
+        };
+
+        uiController.AnimateButtonPressedEventHandler += (sender, args) =>
+        {
+            Console.WriteLine("2. The animate button has been pressed.");
+            Console.WriteLine($"Event called from class {sender.GetType().Name}.");
+            Console.WriteLine($"Message: {args}");
+            Console.WriteLine();
+        };
+
+        uiController.CloseButtonPressedEventHandler += (sender, args) =>
+        {
+            if (args is CloseButtonEventArgs castingArgs)
             {
-                case 0:
-                    return new MainMenuUIController();
-                case 1:
-                    return new ResultMenuUIController();
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(uiTypesId));
+                Console.WriteLine("3. The close button has been pressed.");
+                Console.WriteLine($"Event called from class {sender.GetType().Name}.");
+                Console.WriteLine($"Message: {castingArgs.Message}");
+                Console.WriteLine();
             }
-        }
-
-        /// <summary>
-        /// Method for call ui controller event
-        /// </summary>
-        /// <param name="uiController"></param>
-        private static void CallAllUIControllerEvent(UIController uiController)
-        {
-            uiController.PressOpenBut();
-            uiController.PressCloseBut();
-            uiController.PressAnimateBut();
-        }
-
-
-        /// <summary>
-        /// Method for subs reguler event
-        /// </summary>
-        /// <param name="uiController"></param>
-        private static void SubsToRegulerEvent(UIController uiController)
-        {
-            uiController.OnOpenButPress += () =>
-            {
-                Console.WriteLine("Start Button Press");
-                Console.WriteLine("Application Start");
-                Console.WriteLine();
-            };
-        }
-
-        /// <summary>
-        /// Method for subs non generic method event hendler
-        /// </summary>
-        /// <param name="uiController"></param>
-        private static void SubsToNonGenericEventHendler(UIController uiController)
-        {
-            uiController.PressCloseButEventHandler += (sender, args) =>
-            {
-                var castingArgs = args as CloseButEventArgs;
-                Console.WriteLine("Close Button Press");
-                Console.WriteLine($"Event Send From : {sender.GetType().Name}");
-                Console.WriteLine($"Messege : {castingArgs.Messege}");
-                Console.WriteLine("Application Close");
-                Console.WriteLine();
-            };
-        }
-
-        /// <summary>
-        /// Method for subs generic event hendler
-        /// </summary>
-        /// <param name="uiController"></param>
-        private static void SubsToGenricEventHendler(UIController uiController) 
-        {
-            uiController.PressAnimateButEventHandler += (sender, args) =>
-            {
-                Console.WriteLine("Animate Button Press");
-                Console.WriteLine($"Event Send From : {sender.GetType().Name}");
-                Console.WriteLine($"Messege : {args.Message}");
-            };
-        }
-
-        /// <summary>
-        /// Method for random UI types id
-        /// </summary>
-        /// <returns cref=int></returns>
-        private static int GetRandomUITypesId()
-        {
-            var ammountOfUITypes = 2;
-            return RandomNumberGenerator.GetInt32(ammountOfUITypes);
-        }
+        };
     }
 }

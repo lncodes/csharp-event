@@ -1,28 +1,15 @@
-﻿using System;
+﻿namespace Lncodes.Example.Event;
 
-namespace Lncodes.Example.Event
+public sealed class MainMenuUiController : UiController
 {
-    public sealed class MainMenuUIController : UIController
+    ///<inheritdoc cref="UiController.PressCloseButton"/>
+    public override void PressCloseButton()
     {
-        ///<inheritdoc cref="UIController.PressCloseBut"/>
-        public override void PressCloseBut()
-        {
-            var closeButArgs = new CloseButEventArgs("This Close But Event Call From Main Menu");
-            OnCloseButPress(closeButArgs);
-        }
-
-        ///<inheritdoc cref="UIController.PressAnimateBut"/>
-        public override void PressAnimateBut()
-        {
-            var animateButArgs = new AnimateButEventArgs("This Animate But Event Call From Main Menu");
-            OnAnimateButPress(animateButArgs);
-        }
-
-        ///<inheritdoc cref="UIController.OnAnimateButPress(AnimateButEventArgs)"/>
-        protected override void OnAnimateButPress(AnimateButEventArgs e)
-        {
-            base.OnAnimateButPress(e);
-            Console.WriteLine("Make Animate Button Not Interactable After Press");
-        }
+        var closeButtonEventArgs = new CloseButtonEventArgs("You have exited the main menu.");
+        OnCloseButtonPressed(closeButtonEventArgs);
     }
+
+    ///<inheritdoc cref="UiController.PressAnimateButton"/>
+    public override void PressAnimateButton() =>
+        OnAnimateButtonPressed("The animation in the main menu has started.");
 }
