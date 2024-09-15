@@ -1,9 +1,9 @@
-name: Update Markdown Placeholders.yml
+name: Update Markdown Placeholders
 
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   update-markdown:

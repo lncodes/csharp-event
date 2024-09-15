@@ -19,6 +19,7 @@ internal static class Program
     /// Creates a UI controller instance based on a randomly generated ID
     /// </summary>
     /// <returns>An instance of <see cref="UiController"/></returns>
+    /// <exception cref="InvalidOperationException">Thrown when the random value is out of expected range.</exception>
     private static UiController CreateRandomUiController()
     {
         var uiId = RandomNumberGenerator.GetInt32(2);
