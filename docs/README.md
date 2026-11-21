@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> **This repository has moved** to [csharp-concepts/event](https://github.com/lncodes/csharp-concepts/tree/main/event).
+> It is archived (read-only). The full commit history was preserved in the new location, upgraded to .NET 10.
+
 <br>
 <p align="center">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://lncodes.com">
